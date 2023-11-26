@@ -17,13 +17,6 @@ require("lazy").setup({
     {
       "LazyVim/LazyVim",
       import = "lazyvim.plugins",
-      opts = {
-        colorscheme = "everforest",
-        news = {
-          lazyvim = true,
-          neovim = true,
-        },
-      },
     },
     -- import any extras modules here
     { import = "lazyvim.plugins.extras.linting.eslint" },
@@ -50,9 +43,6 @@ require("lazy").setup({
     -- have outdated releases, which may break your Neovim install.
     version = false, -- always use the latest git commit
     -- version = "*", -- try installing the latest stable version for plugins that support semver
-  },
-  dev = {
-    path = "~/.ghq/github.com",
   },
   checker = { enabled = true }, -- automatically check for plugin updates
   performance = {
