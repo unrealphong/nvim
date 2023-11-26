@@ -1,5 +1,5 @@
 -- local default_theme = "gruvbox"
--- local default_theme = "gruvbox-material"
+local default_theme = "gruvbox-material"
 -- local default_theme = "darcula"
 -- local default_theme = "moon"
 -- local default_theme = "night"
@@ -10,7 +10,7 @@
 -- local default_theme = "macchiato"
 -- local default_theme = "mocha"
 -- local default_theme = "vscode"
-local default_theme = "ayu"
+-- local default_theme = "ayu"
 
 local default_scheme = "dark"
 -- local default_scheme = "light"
