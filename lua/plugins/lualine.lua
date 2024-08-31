@@ -1,6 +1,7 @@
 return {
   "nvim-lualine/lualine.nvim",
   dependencies = {
+    "nvim-tree/nvim-web-devicons",
     "meuter/lualine-so-fancy.nvim",
   },
   lazy = false,
@@ -10,8 +11,6 @@ return {
     require("lualine").setup({
       options = {
         theme = "auto",
-        -- theme = "github_dark",
-        -- theme = "catppuccin",
         globalstatus = true,
         icons_enabled = true,
         -- component_separators = { left = "│", right = "│" },
@@ -64,7 +63,7 @@ return {
         lualine_z = {},
       },
       tabline = {},
-      extensions = { "nvim-tree", "lazy" },
+      extensions = { "nvim-tree" },
     })
   end,
 }
