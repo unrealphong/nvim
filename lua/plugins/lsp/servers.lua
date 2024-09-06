@@ -2,21 +2,28 @@ return {
   tsserver = {
     init_options = {
       plugins = {
-        -- {
-        --   name = "@vue/typescript-plugin",
-        --   location = "/Users/lehongphong/.local/share/nvim/mason/packages/vue-language-server/node_modules/@vue/language-server/node_modules/@vue/typescript-plugin",
-        --   languages = { "vue" },
-        -- },
+        {
+          name = "@vue/typescript-plugin",
+          location = "/Users/lehongphong/.local/share/nvim/mason/packages/vue-language-server/node_modules/@vue/language-server/node_modules/@vue/typescript-plugin",
+          languages = { "vue" },
+        },
       },
     },
-    filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact" },
+    filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
   },
   lua_ls = {},
-  volar = {
-    filetypes = { "vue" },
-    init_options = {
-      vue = {
-        hybridMode = false,
+  jdtls = {},
+  pyright = {
+    cmd = { "pyright-langserver", "--studio" },
+    single_file_suport = true,
+    filetypes = { "python" },
+    settings = {
+      python = {
+        analysis = {
+          autoSearchPaths = true,
+          diagnosticMode = "openFilesOnly",
+          useLibraryCodeForTypes = true,
+        },
       },
     },
   },

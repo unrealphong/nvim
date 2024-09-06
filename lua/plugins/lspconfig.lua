@@ -6,6 +6,7 @@ return {
     "williamboman/mason-lspconfig.nvim",
     { "hrsh7th/cmp-nvim-lsp" },
     "pmizio/typescript-tools.nvim",
+    "mfussenegger/nvim-jdtls",
   },
   config = function()
     require("mason").setup({
@@ -95,17 +96,6 @@ return {
       filetypes = { "gleam" },
       root_dir = require("lspconfig").util.root_pattern("gleam.toml", ".git"),
       capabilities = capabilities,
-    })
-    require("lspconfig").tsserver.setup({
-      init_options = {
-        plugins = {
-          {
-            name = "@vue/typescript-plugin",
-            location = "/Users/lehongphong/.local/share/nvim/mason/packages/vue-language-server/node_modules/@vue/language-server",
-            languages = { "vue" },
-          },
-        },
-      },
     })
     vim.diagnostic.config({
       title = false,

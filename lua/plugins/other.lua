@@ -181,56 +181,6 @@ return {
   },
 
   -- Indent guide for Neovim
-  {
-    "kevinhwang91/nvim-ufo",
-    dependencies = "kevinhwang91/promise-async",
-    version = "v1.4.0",
-    config = function()
-      vim.o.foldcolumn = "1"
-      vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
-      vim.o.foldlevelstart = 99
-      vim.o.foldenable = true
-      vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
-
-      vim.keymap.set("n", "zR", require("ufo").openAllFolds)
-      vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
-      vim.keymap.set("n", "zr", require("ufo").openFoldsExceptKinds)
-      vim.keymap.set("n", "zm", require("ufo").closeFoldsWith) -- closeAllFolds == closeFoldsWith(0)
-      vim.keymap.set("n", "zk", require("ufo").peekFoldedLinesUnderCursor)
-
-      local handler = function(virtText, lnum, endLnum, width, truncate)
-        local newVirtText = {}
-        local suffix = (" 󰁂 %d "):format(endLnum - lnum)
-        local sufWidth = vim.fn.strdisplaywidth(suffix)
-        local targetWidth = width - sufWidth
-        local curWidth = 0
-        for _, chunk in ipairs(virtText) do
-          local chunkText = chunk[1]
-          local chunkWidth = vim.fn.strdisplaywidth(chunkText)
-          if targetWidth > curWidth + chunkWidth then
-            table.insert(newVirtText, chunk)
-          else
-            chunkText = truncate(chunkText, targetWidth - curWidth)
-            local hlGroup = chunk[2]
-            table.insert(newVirtText, { chunkText, hlGroup })
-            chunkWidth = vim.fn.strdisplaywidth(chunkText)
-            -- str width returned from truncate() may less than 2nd argument, need padding
-            if curWidth + chunkWidth < targetWidth then
-              suffix = suffix .. (" "):rep(targetWidth - curWidth - chunkWidth)
-            end
-            break
-          end
-          curWidth = curWidth + chunkWidth
-        end
-        table.insert(newVirtText, { suffix, "MoreMsg" })
-        return newVirtText
-      end
-
-      require("ufo").setup({
-        fold_virt_text_handler = handler,
-      })
-    end,
-  },
   -- editor config support
   {
     "editorconfig/editorconfig-vim",
@@ -313,61 +263,23 @@ return {
       },
     },
   },
+  {
+    "echasnovski/mini.icons",
+    opts = {},
+    lazy = true,
+    specs = {
+      { "nvim-tree/nvim-web-devicons", optional = true },
+    },
+    init = function()
+      package.preload["nvim-web-devicons"] = function()
+        -- needed since it will be false when loading and mini will fail
+        package.loaded["nvim-web-devicons"] = {}
+        require("mini.icons").mock_nvim_web_devicons()
+        return package.loaded["nvim-web-devicons"]
+      end
+    end,
+  },
 
-  -- {
-  --   "echasnovski/mini.nvim",
-  --   config = function()
-  --     -- Better Around/Inside textobjects
-  --     --
-  --     -- Examples:
-  --     --  - va)  - [V]isually select [A]round [)]paren
-  --     --  - yinq - [Y]ank [I]nside [N]ext [']quote
-  --     --  - ci'  - [C]hange [I]nside [']quote
-  --     require("mini.ai").setup({ n_lines = 500 })
-  --
-  --     -- Add/delete/replace surroundings (brackets, quotes, etc.)
-  --     --
-  --     -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
-  --     -- - sd'   - [S]urround [D]elete [']quotes
-  --     -- - sr)'  - [S]urround [R]eplace [)] [']
-  --     require("mini.surround").setup()
-  --
-  --     require("mini.pairs").setup()
-  --
-  --     -- Simple and easy statusline.
-  --     --  You could remove this setup call if you don't like it,
-  --     --  and try some other statusline plugin
-  --     local statusline = require("mini.statusline")
-  --     -- set use_icons to true if you have a Nerd Font
-  --     statusline.setup({ use_icons = vim.g.have_nerd_font })
-  --
-  --     -- You can configure sections in the statusline by overriding their
-  --     -- default behavior. For example, here we set the section for
-  --     -- cursor location to LINE:COLUMN
-  --     ---@diagnostic disable-next-line: duplicate-set-field
-  --     statusline.section_location = function()
-  --       return "%2l:%-2v"
-  --     end
-  --   end,
-  -- },
-  --
-  -- {
-  --   "echasnovski/mini.icons",
-  --   opts = {},
-  --   lazy = true,
-  --   specs = {
-  --     { "nvim-tree/nvim-web-devicons", optional = true },
-  --   },
-  --   init = function()
-  --     package.preload["nvim-web-devicons"] = function()
-  --       -- needed since it will be false when loading and mini will fail
-  --       package.loaded["nvim-web-devicons"] = {}
-  --       require("mini.icons").mock_nvim_web_devicons()
-  --       return package.loaded["nvim-web-devicons"]
-  --     end
-  --   end,
-  -- },
-  --
   {
     "fladson/vim-kitty",
   },

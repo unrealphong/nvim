@@ -4,66 +4,57 @@ return {
     "nvim-tree/nvim-web-devicons",
     "meuter/lualine-so-fancy.nvim",
   },
-  lazy = false,
-  event = { "BufReadPost", "BufNewFile", "VeryLazy" },
-  config = function()
-    -- local icons = require("config.icons")
-    require("lualine").setup({
-      options = {
-        theme = "auto",
-        globalstatus = true,
-        icons_enabled = true,
-        -- component_separators = { left = "│", right = "│" },
-        component_separators = { left = "|", right = "|" },
-        section_separators = { left = "", right = "" },
-        disabled_filetypes = {
-          statusline = {
-            "alfa-nvim",
-            "help",
-            "nvim-tree",
-            "Trouble",
-            "spectre_panel",
-            "toggleterm",
+  opts = {
+    options = {
+      theme = "auto",
+      component_separators = { left = "│", right = "│" },
+      section_separators = { left = "", right = "" },
+      globalstatus = true,
+      refresh = {
+        statusline = 100,
+      },
+    },
+    sections = {
+      lualine_a = {
+        { "fancy_mode", width = 1 },
+      },
+      lualine_b = {
+        { "fancy_branch" },
+        { "fancy_diff" },
+      },
+      lualine_c = {
+        {
+          "filename",
+          file_status = true, -- Displays file status (readonly status, modified status)
+          newfile_status = false, -- Display new file status (new file means no write after created)
+          path = 1, -- 0: Just the filename
+          -- 1: Relative path
+          -- 2: Absolute path
+          -- 3: Absolute path, with tilde as the home directory
+          -- 4: Filename and parent dir, with tilde as the home directory
+
+          shorting_target = 40, -- Shortens path to leave 40 spaces in the window
+          -- for other components. (terrible name, any suggestions?)
+          symbols = {
+            modified = "[+]", -- Text to show when the file is modified.
+            readonly = "[-]", -- Text to show when the file is non-modifiable or readonly.
+            unnamed = "[No Name]", -- Text to show for unnamed buffers.
+            newfile = "[New]", -- Text to show for newly created file before first write
           },
-          winbar = {},
         },
       },
-      sections = {
-        lualine_a = {},
-        lualine_b = {
-          "fancy_branch",
-        },
-        lualine_c = {
-          {
-            "filename",
-            path = 1, -- 2 for full path
-            symbols = {
-              modified = "  ",
-              -- readonly = "  ",
-              -- unnamed = "  ",
-            },
-          },
-          { "fancy_diagnostics", sources = { "nvim_lsp" }, symbols = { error = " ", warn = " ", info = " " } },
-          { "fancy_searchcount" },
-        },
-        lualine_x = {
-          "fancy_lsp_servers",
-          "fancy_diff",
-          "progress",
-        },
-        lualine_y = {},
-        lualine_z = {},
+      lualine_x = {
+        { "fancy_macro" },
+        { "fancy_diagnostics" },
+        { "fancy_searchcount" },
+        { "fancy_location" },
       },
-      inactive_sections = {
-        lualine_a = {},
-        lualine_b = {},
-        lualine_c = { "filename" },
-        -- lualine_x = { "location" },
-        lualine_y = {},
-        lualine_z = {},
+      lualine_y = {
+        { "fancy_filetype", ts_icon = "" },
       },
-      tabline = {},
-      extensions = { "nvim-tree" },
-    })
-  end,
+      lualine_z = {
+        { "fancy_lsp_servers" },
+      },
+    },
+  },
 }
